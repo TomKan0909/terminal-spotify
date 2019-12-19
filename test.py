@@ -6,12 +6,13 @@ import webbrowser
 import spotipy.util as util
 from json.decoder import JSONDecodeError
 
+"""TODO: 1. Extract user's saved albums info 
+
+"""
+
 #Get username from terminal
 
-#User id: 31ytkldamhg43ewe6yaspk3lzhvu 
-#ClientId: e13d2298f41947c6ad924c351d613c97
-#ClientSecret: 9b49daab7e6747b9b2fee937fc1dc672
-#RediretURI: https://github.com/TomKan0909
+
 
 USER_ID = '31ytkldamhg43ewe6yaspk3lzhvu' 
 
