@@ -1,3 +1,0 @@
-export SPOTIPY_CLIENT_ID='e13d2298f41947c6ad924c351d613c97'
-export SPOTIPY_CLIENT_SECRET='9b49daab7e6747b9b2fee937fc1dc672'
-export SPOTIPY_REDIRECT_URI='http://example.com/callback/'

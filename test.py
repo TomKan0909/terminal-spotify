@@ -48,8 +48,8 @@ def main():
     sp = spotipy.Spotify(auth=token)
 
     
-    result = current_user_albums_artist(sp)
-    # result = json.dumps(sp.current_user_saved_albums(limit=1), sort_keys= True, indent=4)
+    # result = current_user_albums_artist(sp)
+    result = json.dumps(sp.current_user_saved_albums(limit=1), sort_keys= True, indent=4)
     # albums = {}
     # for album in result:
         
