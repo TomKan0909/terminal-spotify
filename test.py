@@ -5,8 +5,10 @@ import spotipy
 import webbrowser
 import spotipy.util as util
 from json.decoder import JSONDecodeError
+from spotify_album import SpotifyAlbum
+from spotify_artist import SpotifyArtist
 
-"""TODO: 1. Extract user's saved albums info 
+"""TODO: 1. Extract user's saved albums info q
 
 """
 
@@ -14,64 +16,55 @@ from json.decoder import JSONDecodeError
 
 
 
-USER_ID = '31ytkldamhg43ewe6yaspk3lzhvu' 
 
+"""
+returns user albums in a dict with artist_id as keys and 
+album_ids as values
+"""
 def current_user_albums_artist(sp):
+    #Get first 50 albums
     results = sp.current_user_saved_albums(limit=50,offset=0)
-    albums = results
+    albums = _current_user_album_artist_helper(results)
     i = 0 
     while results['items'] != []:
         i += 50
         results = sp.current_user_saved_albums(limit=50,offset=i)
-        albums.update(results)
+        albums.update(_current_user_album_artist_helper(results))
     # return sp.current_user_saved_albums(50) # 50 is max. albums return at once
     return albums
 
-
-def _cur_usr_alb_help(js, albums):
-    for item in js['items']:
-        artist = item["album"]["artists"]["name"]
-        if artist not in albums:
-            albums[artist] = {} # albums of artist; formart (nameOfAlbum : albumURI)
+def _current_user_album_artist_helper(results):
+    albums = {}
+    for item in results['items']:
+        album_id = item['album']['id']
+        album_artist_id = item['album']['artists'][0]['id']
+        if album_artist_id not in albums:
+            albums[album_artist_id] = [album_id]
+        else:
+            albums[album_artist_id].append(album_id)
+    return albums
         
-    pass
-
-
 
 def main():
+    USER_ID = '31ytkldamhg43ewe6yaspk3lzhvu' 
+    play_token = None
     try:
-        token = util.prompt_for_user_token(USER_ID, 'user-library-read')
+        play_token = util.prompt_for_user_token(USER_ID, 'user-library-read')
     except(AttributeError):
         os.remove(f".cache-{USER_ID}") 
-        token = util.prompt_for_user_token(USER_ID, 'user-library-read') 
+        play_token = util.prompt_for_user_token(USER_ID, 'user-library-read')
 
 
-    sp = spotipy.Spotify(auth=token)
 
+    sp = spotipy.Spotify(auth=play_token)
+    # sp.start_playback();
     
-    # result = current_user_albums_artist(sp)
-    result = json.dumps(sp.current_user_saved_albums(limit=1), sort_keys= True, indent=4)
-    # albums = {}
-    # for album in result:
+    print(sp.current_user()["display_name"])
+    print(current_user_albums_artist(sp))
+
         
-    # result = current_user_albums(sp)
-    f = open('text.txt', 'w')
-    for line in result:
-        f.write(line)
 
 
 
 if __name__ == "__main__":
     main()
-
-# # Get artist image
-# artist = input("Enter artist: ")
-
-# results = sp.search(q='artist:' + artist, type='artist')
-# items = results['artists']['items']
-# if len(items) > 0:
-#     artist = items[0]
-#     print (artist['name']) 
-#     print ('---------------------------------')
-#     for i in range(len(artist['images'])):
-#         print (artist['images'][i]['url']) # ['url']
