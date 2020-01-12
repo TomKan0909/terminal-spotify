@@ -1,23 +1,22 @@
-class SpotifyTrack:
+from typing import List
+from spotify_abstract import SpotifyAbstract
 
-    _name: str
-    _ID: str
-    _track_number: int
+""""
+Represents a spotify album   
+"""
+class SpotifyTrack(SpotifyAbstract):
+
+    
 
 
-    def __init__(self, name, ID, track_number):
-        self._name = name
-        self._ID = ID
-        self._track_number = track_number
+    def __init__(self, name, duration, id, track_number):
+        self.track_number = track_number
+        super().__init__(self, name. duration, id)
+        
+        
 
     def __str__(self):
-        return "Track {} has id: {}".format(self._name, self._ID)    
+        return self.track_number + ". " + self.name
     
-    def get_name(self):
-        return self._name
-    
-    def get_ID(self):
-        return self._ID
 
-    def get_track_number(self):
-        return self._track_number
+    

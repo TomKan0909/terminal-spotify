@@ -16,10 +16,10 @@ class SpotifyAbstract:
         pass 
 
     def get_id(self):
-        return id
+        return self.id
     
     def get_duration(self):
-        return duration
+        return self.duration
     
     
 

@@ -1,30 +1,25 @@
 from typing import List
-from spotify_album import SpotifyAlbum
+
 
 class SpotifyArtist:
 
-    _name: str
-    _ID: str
-    albums: List[SpotifyAlbum]
+   
 
 
-    def __init__(self, name, ID):
-        self._name = name
-        self._ID = ID
-        self.albums = []
+    def __init__(self, name, id):
+        self.name = name
+        self.id = id
+        self.albums_or_tracks = []
 
     def __str__(self):
-        return "Artist {} has id: {}".format(self._name, self._ID)    
-    
-    def get_name(self):
-        return self._name
+        return self.name   
     
     def get_ID(self):
-        return self._ID
+        return self.id
 
-    def add_album(self, spotify_album: SpotifyAlbum):
-        self.albums.append(spotify_album)
+    def add_album_or_track(self, spotify_abstract):
+        self.albums_or_tracks.append(spotify_abstract)
 
-    def get_all_albums(self):
-        return self.albums
+    def get_all(self):
+        return self.albums_or_tracks
     

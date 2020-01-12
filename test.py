@@ -12,7 +12,6 @@ from spotify_artist import SpotifyArtist
 
 
 
-
 """
 returns user albums in a dict with artist_id as keys and 
 album_ids as values
