@@ -1,25 +1,20 @@
 from typing import List
+from spotify_abstract import SpotifyAbstract
 
-
-class SpotifyArtist:
+class SpotifyArtist(SpotifyAbstract):
 
    
 
 
     def __init__(self, name, id):
-        self.name = name
-        self.id = id
-        self.albums_or_tracks = []
+        super().__init__(name, id)
+        self.albums = []
 
     def __str__(self):
         return self.name   
-    
-    def get_ID(self):
-        return self.id
 
-    def add_album_or_track(self, spotify_abstract):
-        self.albums_or_tracks.append(spotify_abstract)
+    def add_album(self, spotify_abstract):
+        self.albums.append(spotify_abstract)
 
     def get_all(self):
-        return self.albums_or_tracks
-    
+        return self.albums

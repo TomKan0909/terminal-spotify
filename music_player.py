@@ -33,30 +33,35 @@ class SpotifyMusicPlayer:
         context_uri = None
         if isinstance(sp_album_track, SpotifyAlbum):
             context_uri = self.sp_read.album(sp_album_track_id)["uri"]
+            self.sp_play.start_playback(context_uri=context_uri)
         elif isinstance(sp_album_track, SpotifyTrack):
-            context_uri = self.sp_read.track(sp_album_track_id)["uri"] 
+            track_uri = self.sp_read.track(sp_album_track_id)["uri"] 
+            self.sp_play.start_playback(uris=[track_uri])
         
-        self.sp_play.start_playback(context_uri=context_uri)
-        self.currently_playing = sp_currently_playing.current_user_playing_track()['item']['name']
+
+        self.currently_playing = self.sp_currently_playing.current_user_playing_track()['item']['name']
 
     def get_currently_playing(self):
-        self.currently_playing = sp_currently_playing.current_user_playing_track()['item']['name']
+        self.currently_playing = self.sp_currently_playing.current_user_playing_track()['item']['name']
         return self.currently_playing
 
 
     def increase_volume(self):
-        if self.volume >= 100:
-            return
-        else
-            self.volume += 5
-            self.sp_play.volume(self.volume)
+        self.volume = min(self.volume + 5, 100)
+        self.sp_play.volume(self.volume)
     
     def decrease_volume(self):
-        if self.volume <= 0:
-            return
-        else
-            self.volume -= 5
-            self.sp_play.volume(self.volume)
+        self.volume = max(self.volume - 5, 0)
+        self.sp_play.volume(self.volume)
     
     def get_volume(self):
         return self.volume
+
+    def get_artists(self):
+        return self.sp_artists
+    
+    def play(self):
+        self.sp_play.start_playback()
+
+    def pause(self):
+        self.sp_play.pause_playback()

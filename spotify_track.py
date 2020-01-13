@@ -9,14 +9,14 @@ class SpotifyTrack(SpotifyAbstract):
     
 
 
-    def __init__(self, name, duration, id, track_number):
+    def __init__(self, name, id, track_number):
         self.track_number = track_number
-        super().__init__(self, name. duration, id)
+        super().__init__(name, id)
         
         
 
     def __str__(self):
-        return self.track_number + ". " + self.name
+        return str(self.track_number) + ". " + self.name
     
 
     

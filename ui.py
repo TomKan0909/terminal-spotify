@@ -23,16 +23,19 @@ class Ui():
         self.music_player = music_player
         self.artist_name_dict = {}
         self.currently_playing = None
-        self.volume = 100
+        self.volume = music_player.get_volume()
         self.albums_body = []
+        self.currently_playing_text = urwid.Text("Currently playing: {}".format(self.currently_playing))
+        self.volume_text = urwid.Text("Volume: {}".format(self.volume), align='right')
 
 
     # Set up contents of the artist column
     def init_artist_body(self):
         self.artist_body = []
         #Get all artist and store it in list; need to implement
+        artists = self.music_player.get_artists()
+        artists.sort(key=lambda x: x.name)
         #temporary for testing
-        artists = ["KANYE WEST", "KANYE WEST 2", "KANYE WEST 3", "KANYE WEST", "KANYE WEST 2", "KANYE WEST 3", "KANYE WEST", "KANYE WEST 2", "KANYE WEST 3", "KANYE WEST", "KANYE WEST 2", "KANYE WEST 3", "KANYE WEST", "KANYE WEST 2", "KANYE WEST 3", "KANYE WEST", "KANYE WEST 2", "KANYE WEST 3", "KANYE WEST", "KANYE WEST 2", "KANYE WEST 3", "KANYE WEST", "KANYE WEST 2", "KANYE WEST 3", "KANYE WEST", "KANYE WEST 2", "KANYE WEST 3", "KANYE WEST", "KANYE WEST 2", "KANYE WEST 3"]
         for artist in artists:
             #implement get_name method for spotify artist
             button = urwid.Button(artist.__str__())
@@ -46,8 +49,14 @@ class Ui():
         
         #Get all albums/tracks for spotify artist; need to be implemented
         self.albums_body = []
-        albums_tracks = [["beef ", "beef "], ["chicken","chicken"]]        
-        for at in random.choice(albums_tracks):
+        
+        albums = artist.get_all()
+        albums_tracks = []
+        for album in albums:
+            albums_tracks.append(album)
+            albums_tracks.extend(album.get_tracks())
+
+        for at in albums_tracks:
             button = urwid.Button(at.__str__())
             urwid.connect_signal(button, 'click', self.playback, at)
             self.albums_body.append(urwid.AttrMap(button, None, focus_map='reversed'))
@@ -68,27 +77,30 @@ class Ui():
         #Get album or track id 
         self.music_player.playback(at)
         self.currently_playing = at.__str__()
-        self.current_play_text.set_text("Currently playing: {}".format(self.currently_playing))
+        self.currently_playing_text.set_text("Currently playing: {}".format(self.currently_playing))
         
     
     #increase volume
     def increase_volume(self):
         self.music_player.increase_volume()
-        self.volume_text.set_text("Volume: {}".format(self.music_player.get_volume()), align='right')
 
     #decrease volume
     def decrease_volume(self):
         self.music_player.decrease_volume()
-        self.volume_text.set_text("Volume: {}".format(self.music_player.get_volume()), align='right')
     
+    #resume playback
+    def play(self):
+        self.music_player.play()
+
+    #pause playback
+    def pause(self):
+        self.music_player.pause()
 
     def update_albums_box(self, _loop, _data):
         
 
-        test = ["1", "2", "3", "4"]
-
         self.currently_playing_text.set_text("Currently playing: {}".format(self.music_player.get_currently_playing()))
-
+        self.volume_text = urwid.Text("Volume: {}".format(self.music_player.get_volume()), align='right')   
         # self.currently_playing_text = urwid.Text("Currently playing: {}".format(random.choice(test)))
         # self.volume_text = urwid.Text("Volume: {}".format(random.choice(test)), align='right')
         self.footer_columns = urwid.Columns([self.currently_playing_text, self.volume_text],dividechars=5)
@@ -136,22 +148,22 @@ class Ui():
 
 
     #TODO: implement methods for key handling
-    # def handle_keys(self, key):
-    #     if(key=='q'):
-    #         raise urwid.ExitMainLoop()
+    def handle_keys(self, key):
+        if(key=='q'):
+            raise urwid.ExitMainLoop()
 
-    #     method_dict = {
-    #         'v': , #change volume down
-    #         'b': , #change volume up
-    #         'p': , #play 
-    #         'o': ,  #pause
-    #     }
+        method_dict = {
+            'v': self.decrease_volume, #change volume down
+            'b': self.increase_volume, #change volume up
+            'p': self.play, #play 
+            'o': self.pause,  #pause
+        }
     
 
-    #     try:
-    #         method_dict[key]() 
-    #     except:
-    #         pass
+        try:
+            method_dict[key]() 
+        except:
+            pass
 
 
 

@@ -6,9 +6,8 @@ class SpotifyAbstract:
     Abstract class to represent an album or track
     """
 
-    def __init__(self, name, duration, id):
+    def __init__(self, name, id):
         self.name = name
-        self.duration = duration
         self.id = id    
 
     # Abstract method
@@ -18,8 +17,6 @@ class SpotifyAbstract:
     def get_id(self):
         return self.id
     
-    def get_duration(self):
-        return self.duration
     
     
 
