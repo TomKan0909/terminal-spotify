@@ -101,8 +101,6 @@ class Ui():
 
         self.currently_playing_text.set_text("Currently playing: {}".format(self.music_player.get_currently_playing()))
         self.volume_text = urwid.Text("Volume: {}".format(self.music_player.get_volume()), align='right')   
-        # self.currently_playing_text = urwid.Text("Currently playing: {}".format(random.choice(test)))
-        # self.volume_text = urwid.Text("Volume: {}".format(random.choice(test)), align='right')
         self.footer_columns = urwid.Columns([self.currently_playing_text, self.volume_text],dividechars=5)
         self.footer_pile = urwid.Pile([urwid.Divider(), self.footer_columns])
         self.player_ui_frame.set_footer(self.footer_pile)
@@ -143,8 +141,6 @@ class Ui():
 
        
         
-        
-
 
 
     #TODO: implement methods for key handling

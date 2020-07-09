@@ -30,9 +30,7 @@ def current_user_albums_artist(sp):
         i += 50
         results = sp.current_user_saved_albums(limit=50,offset=i)
         _current_user_album_artist_helper(results)
-        # albums.update(_current_user_album_artist_helper(results))
-    # return sp.current_user_saved_albums(50) # 50 is max. albums return at once
-    # return albums
+        
 
 """helper method for current_user_albums_artists"""
 def _current_user_album_artist_helper(results):
@@ -91,10 +89,10 @@ def main():
     sp_read = spotipy.Spotify(auth=read_token)
     sp_play = spotipy.Spotify(auth=play_token)
     sp_current = spotipy.Spotify(auth=current_token)
-    # sp_play.start_playback(context_uri='spotify:album:1vWnB0hYmluskQuzxwo25a')
+
     
     #Get artists albums dictionary
-    # usr_albums = current_user_albums_artist(sp_read)
+
     current_user_albums_artist(sp_read)
     #Get artist_id
     artists = list(artist_id_to_artist.values())
@@ -109,38 +107,7 @@ def main():
     loop.run()
 
 
-    # print(artists_readable)
-    # print(artists[0].get_all()[0].__str__())
-    # tracks = [t.__str__() for t in artists[0].get_all()[0].get_tracks()]
-    # print(tracks)
-
-
-    #Lambda function to turn artist id into strings
-    # artist_name = lambda artist_id: (sp_read.artist(artist_id))["name"]
-    # artists_name = [artist_name(artist) for artist in artists]
-    # artists_name_list = list(enumerate(artists_name, 1))
-
-    # for item in artists_name_list:
-    #     print(item)
-
-    # usr_input = int(input("pick an artist by entering number between 1 and {}: "  
-    #                 .format(len(artists_name_list))))
     
-    # if usr_input < 1 or usr_input > len(artists_name_list):
-    #     usr_input = input("pick an artist by entering number between 1 and {}: "
-    #                     .format(len(artists_name_list))) 
-    # else:
-    #     picked_artist = artists[usr_input - 1]
-    #     picked_artists_context_uri = sp_read.artist(picked_artist)["uri"]
-    #     sp_play.start_playback(context_uri=picked_artists_context_uri)
-    #     print("Currently playing {}".format(artist_name(picked_artist)))
-
-
-    
-
-
-
-        
 
 
 
