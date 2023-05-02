@@ -3,3 +3,6 @@
 .cache-31ytkldamhg43ewe6yaspk3lzhvu
 .cache-31ytkldamhg43ewe6yaspk3lzhvu 
 credentials.txt
+.vscode
+.idea
+__pycache__
